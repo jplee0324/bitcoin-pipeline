@@ -1,5 +1,7 @@
 from kafka import KafkaProducer
 import websocket
+import sys
+
 try:
     import thread
 except ImportError:
@@ -20,12 +22,11 @@ class Listener(object):
         self.topic = topic
 
     def on_message(self, message):
-        msg = json.loads(message)
-        print(msg)
-        # producer.send(topic, value=msg)
+        producer.send(self.topic, json.dumps(message).encode('utf-8'))
 
     def on_error(self, error):
         print(error)
+        sys.exit()
 
     def on_close(self):
         print("### Connection Closed ###")
@@ -37,18 +38,20 @@ class Listener(object):
     def run(self):
         self.ws.run_forever()
 
-# producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 try:
     subscription = {
         "method": "SUBSCRIBE",
         "params": [
-            "btcusdt@trade"
+            "btcusdt@aggTrade",
+            "ethusdt@aggTrade",
+            "ltcusdt@aggTrade"
         ],
         "id": 1
     }
-    listener = Listener(producer=None, topic=None, url = "wss://stream.binance.com:9443/ws/btcusdt@trade", wsRequest = subscription)
+    listener = Listener(producer=producer, topic="cryptotrades", url = "wss://stream.binance.com:9443/stream?streams=btcusdt@aggTrade/ethusdt@aggTrade/ltcusdt@aggTrade", wsRequest = subscription)
     listener.run()
 except Exception as e:
     print(e)
-    exit(0)
+    sys.exit()
