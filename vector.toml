@@ -1,0 +1,22 @@
+data_dir = "/var/lib/vector"
+
+# Input data. Change me to a valid input source.
+[sources.in]
+  type = "kafka"
+  bootstrap_servers = "localhost:9092"
+  group_id = "test-consumer-group"
+  topics = ["^(prefix1|prefix2)-.+", "cryptotrades"] 
+
+# Output data
+[sinks.out]
+  inputs   = ["in"]
+  type     = "aws_s3"
+  bucket = "cryptotrades" 
+  compression = "none"
+  region = "us-east-1"
+
+  encoding.codec = "ndjson"
+  filename_time_format = "%Y-%m-%d %H:%M:00"
+  key_prefix = ""
+
+  batch.timeout_secs = 60

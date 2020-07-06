@@ -44,13 +44,11 @@ try:
     subscription = {
         "method": "SUBSCRIBE",
         "params": [
-            "btcusdt@aggTrade",
-            "ethusdt@aggTrade",
-            "ltcusdt@aggTrade"
+            "btcusdt@aggTrade"
         ],
         "id": 1
     }
-    listener = Listener(producer=producer, topic="cryptotrades", url = "wss://stream.binance.com:9443/stream?streams=btcusdt@aggTrade/ethusdt@aggTrade/ltcusdt@aggTrade", wsRequest = subscription)
+    listener = Listener(producer=producer, topic="cryptotrades", url = "wss://stream.binance.com:9443/ws/btcusdt@aggTrade", wsRequest = subscription)
     listener.run()
 except Exception as e:
     print(e)
