@@ -44,20 +44,18 @@ The open-source tool Vector was used to act as a **sink** from the source(Kafka)
 When ever an object is put into the S3 bucket, a Lambda function is triggered and processes the log file from that contains all the data from the past minute. All of the transactions are aggregated into one row and inserted into a MySQL database hosted in Amazon RDS with a schema of:
 
 
-**(timestamp, total_count_b, total_count_s, total_btc_b, total_btc_s, total_usd_b, total_usd_s, avg_b, avg_s)**
+**(time, total_count_b, total_count_s, total_btc_b, total_btc_s, total_usd_b, total_usd_s)**
 
 
 | Column Name | Description |
 | ----------- | ------ | 
-| timestamp | time showing the date, hour and minute the transactions were gathered |
+| time | time showing the date, hour and minute the transactions were gathered |
 | total_count_b | total number of buy orders met |
 | total_count_s | total number of sell orders met |
 | total_btc_b | total sum of BTC from buy orders |
 | total_btc_s | total sum of BTC from sell orders | 
 | total_usd_b | total sum in USD for buy orders |
 | total_usd_s | total sum in USD for sell orders | 
-| avg_b | average price for a btc in buy order |
-| avg_s | average price for a btc in sell order |
 
 
 
