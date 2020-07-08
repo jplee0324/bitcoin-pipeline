@@ -1,4 +1,4 @@
-vector --config /home/ubuntu/crypto-trade-pipeline/vector.toml &
+nohup vector --config /home/ubuntu/crypto-trade-pipeline/vector.toml &
 sleep 2
 
-python3 Listener.py &
+nohup python3 Listener.py &
