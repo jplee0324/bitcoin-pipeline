@@ -43,23 +43,20 @@ The open-source tool Vector was used to act as a **sink** from the source(Kafka)
 
 When ever an object is put into the S3 bucket, a Lambda function is triggered and processes the log file from that contains all the data from the past minute. All of the transactions are aggregated into one row and inserted into a MySQL database hosted in Amazon RDS with a schema of:
 
-
-**(time, total_count_b, total_count_s, total_btc_b, total_btc_s, total_usd_b, total_usd_s)**
-
-
 | Column Name | Description |
 | ----------- | ------ | 
-| time | time showing the date, hour and minute the transactions were gathered |
-| total_count_b | total number of buy orders met |
-| total_count_s | total number of sell orders met |
-| total_btc_b | total sum of BTC from buy orders |
-| total_btc_s | total sum of BTC from sell orders | 
-| total_usd_b | total sum in USD for buy orders |
-| total_usd_s | total sum in USD for sell orders | 
-
-
+| TIME | time showing the date, hour and minute the transactions were gathered |
+| TOTAL_COUNT_BUY | total number of buy orders met |
+| TOTAL_COUNT_SELL | total number of sell orders met |
+| TOTAL_BTC_BUY | total sum of BTC from buy orders |
+| TOTAL_BTC_SELL | total sum of BTC from sell orders | 
+| TOTAL_USD_BUY| total sum in USD for buy orders |
+| TOTAL_USD_SELL | total sum in USD for sell orders | 
 
 As data points were collected over days, the data in the MySQL database was visualized on a QuickSight dashboard. This dashboard shows how different metric relating to the volume of buy and sell orders and spread between them may be able to help explain very short term fluctuations in exchange prices.
 
+A sample of the dashboard after running the pipeline for a few days is provided below.
+
+![dashboard](/images/CryptoPipelineDashboard.png)
 
 
